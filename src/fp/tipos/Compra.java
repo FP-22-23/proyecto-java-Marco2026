@@ -16,6 +16,7 @@ public class Compra {
 	private Boolean satisfied; //Consultable y Modificable
 	
 	//Constructores
+	//Entrega 1
 	public Compra(String stockCode, String description, Purchase purchase, LocalDateTime purchaseDate, 
 				  Integer customerId, TypeCountry country, Boolean satisfied) {
 		this.stockCode = stockCode;
@@ -85,6 +86,11 @@ public class Compra {
 	
 	//derivadas
 	//Entrega 1
-	
-	
+	public String getSurvey(String description, Boolean satisfied) { //Devuelve la descripción del producto junto con el grado de satisfacción(como una encuesta (survey) al usuario)
+		String res = "El cliente no está satisfecho";
+		if(satisfied == true) {
+			res = "El cliente está satisfecho";
+		}
+		return "La descripcion del producto: " + getDescription() + ". Satisfecho: " + res;
+	}
 }
