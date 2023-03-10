@@ -1,10 +1,12 @@
 package fp.tipos;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
+
 import fp.common.Purchase;
 import fp.common.TypeCountry;
 
-public class Compra {
+public class Compra implements Comparable<Compra>{
 	//Atributos
 	//Entrega 1
 	private String stockCode; //Consultable y Modificable
@@ -17,6 +19,8 @@ public class Compra {
 	
 	//Constructores
 	//Entrega 1
+	
+	//Constructor con todos los parámetros
 	public Compra(String stockCode, String description, Purchase purchase, LocalDateTime purchaseDate, 
 				  Integer customerId, TypeCountry country, Boolean satisfied) {
 		this.stockCode = stockCode;
@@ -28,13 +32,14 @@ public class Compra {
 		this.satisfied = satisfied;
 	}
 
+	//Constructor con los parámetros description, customerId, satisfies
 	public Compra(String description, Integer customerId, Boolean satisfied) {
 		this.stockCode = "SIN CODIGO";
 		this.description = description;
-		this.purchase = null;
-		this.purchaseDate = null;
+		purchase = new Purchase(1, 1.0);
+		this.purchaseDate = LocalDateTime.of(2020, 1, 1, 12, 00);
 		this.customerId = customerId;
-		this.country = TypeCountry.SIN_DATOS;
+		this.country = TypeCountry.OTHER;
 		this.satisfied = satisfied;
 	}
 	
@@ -42,10 +47,6 @@ public class Compra {
 	//Entrega 1
 	public String getStockCode() {
 		return stockCode;
-	}
-
-	public void setStockCode(String stockCode) {
-		this.stockCode = stockCode;
 	}
 
 	public String getDescription() {
@@ -60,16 +61,8 @@ public class Compra {
 		return purchaseDate;
 	}
 
-	public void setPurchaseDate(LocalDateTime purchaseDate) {
-		this.purchaseDate = purchaseDate;
-	}
-
 	public Integer getCustomerId() {
 		return customerId;
-	}
-
-	public void setCustomerId(Integer customerId) {
-		this.customerId = customerId;
 	}
 
 	public TypeCountry getCountry() {
@@ -80,10 +73,22 @@ public class Compra {
 		return satisfied;
 	}
 
+	public void setStockCode(String stockCode) {
+		this.stockCode = stockCode;
+	}
+
 	public void setSatisfied(Boolean satisfied) {
 		this.satisfied = satisfied;
 	}
-	
+
+	public void setPurchaseDate(LocalDateTime purchaseDate) {
+		this.purchaseDate = purchaseDate;
+	}
+
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
+	}
+
 	//derivadas
 	//Entrega 1
 	public String getSurvey(String description, Boolean satisfied) { //Devuelve la descripción del producto junto con el grado de satisfacción(como una encuesta (survey) al usuario)
@@ -92,5 +97,85 @@ public class Compra {
 			res = "El cliente está satisfecho";
 		}
 		return "La descripcion del producto: " + getDescription() + ". Satisfecho: " + res;
+	}
+	
+	public Double getFee(TypeCountry country) {
+		//Cuantas tasas hay que pagar según tu país correspondiente
+		Double res;
+		switch(country) {
+			case GERMANY:
+				res = 1.5;
+				break;
+			case AUSTRALIA:
+				res = 2.65;
+				break;
+			case EIRE:
+				res = 1.1;
+				break;
+			case FRANCE:
+				res = 0.7;
+				break;
+			case UNITED_KINGDOM:
+				res = 0.5;
+				break;
+			case NORWAY:case NETHERLANDS:
+				res = 1.2;
+				break;
+			case OTHER:default:
+				res = 3.0;			
+		}
+		return res;
+	}
+
+	public Double getFinalPrice(Purchase purchase, Double tasas) {
+		//Nos da el precio final de la compra multiplicando el total de la compra sin impuestos por las tasas
+		return purchase.getTotalPurchase() * tasas;
+	}
+
+	//Representación como cadena
+	public String toString() {
+		return "Compra [stockCode = " + getStockCode() + ", Description = " + getDescription() + ", purchase = " + "(" + "quantity = " + 
+						purchase.quantity() + ", " + "unitPrice = " +  purchase.unitPrice() +")" + ", purchaseDate = " + getPurchaseDate() +
+						", customerId = " + getCustomerId() + ", country = " + getCountry()	+ ", satisfied = " + getSatisfied() + "]";
+	}
+	
+	//Criterios de igualdad hashCode y equals
+	public int hashCode() {
+		return Objects.hash(country, customerId, description, purchaseDate, satisfied, stockCode);
+	}
+
+	public boolean equals(Object obj) {
+		
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Compra other = (Compra) obj;
+		return country == other.country && Objects.equals(customerId, other.customerId)
+				&& Objects.equals(description, other.description) && Objects.equals(purchaseDate, other.purchaseDate)
+				&& Objects.equals(satisfied, other.satisfied) && Objects.equals(stockCode, other.stockCode);
+	}
+
+	//Criterio de Orden natural
+	public int compareTo(Compra c) {
+		int res = getStockCode().compareTo(c.getStockCode());
+		if(res == 0) {
+			res = getDescription().compareTo(c.getDescription());
+			if(res == 0) {
+				res = getPurchaseDate().compareTo(c.getPurchaseDate());
+				if(res == 0) {
+					res = getCustomerId().compareTo(c.getCustomerId());
+					if(res == 0) {
+						res = getCountry().compareTo(c.getCountry());
+						if(res == 0) {
+							res = getSatisfied().compareTo(c.getSatisfied());
+						}
+					}
+				}
+			}
+		}
+		return res;
 	}
 }
