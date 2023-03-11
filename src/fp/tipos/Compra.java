@@ -1,6 +1,8 @@
 package fp.tipos;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 import fp.common.Purchase;
@@ -160,6 +162,7 @@ public class Compra implements Comparable<Compra>{
 
 	//Criterio de Orden natural
 	public int compareTo(Compra c) {
+		
 		int res = getStockCode().compareTo(c.getStockCode());
 		if(res == 0) {
 			res = getDescription().compareTo(c.getDescription());
@@ -177,5 +180,22 @@ public class Compra implements Comparable<Compra>{
 			}
 		}
 		return res;
+	}
+	
+	public List<String> getKeywords(String description){
+		//La propiedad derivada getKeywords recoge las palabras clave de la descripcion. Como aún no hemos dado
+		//hashSet en clase de teoría, he tenido que implementarla con una lista (lo cambiaré en la próxima entrega,
+		//ya que no quiero que haya palabras repetidas y el set me ayudaría a eliminar líneas de código.
+		List<String> keywords = new LinkedList<>();
+		String splitDescription [] = description.split(","); 
+		for(String p:splitDescription) {
+			if(p.length() >= 4) {
+				p = p.trim();
+				if(!(keywords.contains(p))) {
+					keywords.add(p);
+				}
+			}
+		}
+		return keywords;
 	}
 }
