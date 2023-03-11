@@ -82,7 +82,7 @@ public class Compra implements Comparable<Compra>{
 	}
 
 	public void setSatisfied(Boolean satisfied) {
-		Checkers.checkNoNull(satisfied);
+		Checkers.checkNoNull("Satisfied no puede tomar el valor null",satisfied);
 		this.satisfied = satisfied;
 	}
 
@@ -136,7 +136,7 @@ public class Compra implements Comparable<Compra>{
 
 	public Double getFinalPrice() {
 		//Nos da el precio final de la compra, multiplicando el total de la compra sin impuestos por las tasas
-		return purchase.getTotalPurchase() * this.getFee();
+		return purchase.getTotalPurchase() + this.getFee();
 	}
 
 	//Representación como cadena
@@ -151,12 +151,12 @@ public class Compra implements Comparable<Compra>{
 		//hashSet en clase de teoría, he tenido que implementarla con una lista (lo cambiaré en la próxima entrega,
 		//ya que no quiero que haya palabras repetidas y el set me ayudaría a eliminar líneas de código.
 		List<String> keywords = new LinkedList<>();
-		String splitDescription [] = description.split(""); 
+		String splitDescription [] = description.split(" "); 
 		for(String p:splitDescription) {
+			p = p.trim();
 			if(p.length() >= 4) {
-				p = p.trim();
 				if(!(keywords.contains(p))) {
-					keywords.add(p);
+					keywords.add(p.trim());	
 				}
 			}
 		}
