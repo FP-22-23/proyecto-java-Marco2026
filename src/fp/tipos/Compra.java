@@ -30,7 +30,7 @@ public class Compra implements Comparable<Compra>{
 		this.description = description;
 		this.purchase = purchase;
 		setPurchaseDate(purchaseDate);
-		this.customerId = customerId;
+		setCustomerId(customerId);
 		this.country = country;
 		setSatisfied(satisfied);
 	}
@@ -92,12 +92,13 @@ public class Compra implements Comparable<Compra>{
 	}
 
 	public void setCustomerId(Integer customerId) {
+		Checkers.check("El ID del comprador debe tener cinco numeros", String.valueOf(customerId).length() == 5);
 		this.customerId = customerId;
 	}
 
 	//derivadas
 	//Entrega 1
-	public String getSurvey(String description, Boolean satisfied) { //Devuelve la descripción del producto junto con el grado de satisfacción(como una encuesta (survey) al usuario)
+	public String getSurvey() { //Devuelve la descripción del producto junto con el grado de satisfacción(como una encuesta (survey) al usuario)
 		String res = "El cliente no está satisfecho";
 		if(satisfied == true) {
 			res = "El cliente está satisfecho";
@@ -105,7 +106,7 @@ public class Compra implements Comparable<Compra>{
 		return "La descripcion del producto: " + getDescription() + ". Satisfecho: " + res;
 	}
 	
-	public Double getFee(TypeCountry country) {
+	public Double getFee() {
 		//Cuantas tasas hay que pagar según tu país correspondiente
 		Double res;
 		switch(country) {
@@ -133,9 +134,9 @@ public class Compra implements Comparable<Compra>{
 		return res;
 	}
 
-	public Double getFinalPrice(Purchase purchase, Double tasas) {
-		//Nos da el precio final de la compra multiplicando el total de la compra sin impuestos por las tasas
-		return purchase.getTotalPurchase() * tasas;
+	public Double getFinalPrice() {
+		//Nos da el precio final de la compra, multiplicando el total de la compra sin impuestos por las tasas
+		return purchase.getTotalPurchase() * this.getFee();
 	}
 
 	//Representación como cadena
@@ -143,6 +144,23 @@ public class Compra implements Comparable<Compra>{
 		return "Compra [stockCode = " + getStockCode() + ", Description = " + getDescription() + ", purchase = " + "(" + "quantity = " + 
 						purchase.quantity() + ", " + "unitPrice = " +  purchase.unitPrice() +")" + ", purchaseDate = " + getPurchaseDate() +
 						", customerId = " + getCustomerId() + ", country = " + getCountry()	+ ", satisfied = " + getSatisfied() + "]";
+	}
+	
+	public List<String> getKeywords(){
+		//La propiedad derivada getKeywords recoge las palabras clave de la descripcion. Como aún no hemos dado
+		//hashSet en clase de teoría, he tenido que implementarla con una lista (lo cambiaré en la próxima entrega,
+		//ya que no quiero que haya palabras repetidas y el set me ayudaría a eliminar líneas de código.
+		List<String> keywords = new LinkedList<>();
+		String splitDescription [] = description.split(""); 
+		for(String p:splitDescription) {
+			if(p.length() >= 4) {
+				p = p.trim();
+				if(!(keywords.contains(p))) {
+					keywords.add(p);
+				}
+			}
+		}
+		return keywords;
 	}
 	
 	//Criterios de igualdad hashCode y equals
@@ -184,20 +202,4 @@ public class Compra implements Comparable<Compra>{
 		return res;
 	}
 	
-	public List<String> getKeywords(String description){
-		//La propiedad derivada getKeywords recoge las palabras clave de la descripcion. Como aún no hemos dado
-		//hashSet en clase de teoría, he tenido que implementarla con una lista (lo cambiaré en la próxima entrega,
-		//ya que no quiero que haya palabras repetidas y el set me ayudaría a eliminar líneas de código.
-		List<String> keywords = new LinkedList<>();
-		String splitDescription [] = description.split(","); 
-		for(String p:splitDescription) {
-			if(p.length() >= 4) {
-				p = p.trim();
-				if(!(keywords.contains(p))) {
-					keywords.add(p);
-				}
-			}
-		}
-		return keywords;
-	}
 }
