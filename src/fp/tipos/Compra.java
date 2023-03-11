@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import fp.common.Purchase;
 import fp.common.TypeCountry;
+import fp.utiles.Checkers;
 
 public class Compra implements Comparable<Compra>{
 	//Atributos
@@ -25,18 +26,18 @@ public class Compra implements Comparable<Compra>{
 	//Constructor con todos los parámetros
 	public Compra(String stockCode, String description, Purchase purchase, LocalDateTime purchaseDate, 
 				  Integer customerId, TypeCountry country, Boolean satisfied) {
-		this.stockCode = stockCode;
+		setStockCode(stockCode);
 		this.description = description;
 		this.purchase = purchase;
-		this.purchaseDate = purchaseDate;
+		setPurchaseDate(purchaseDate);
 		this.customerId = customerId;
 		this.country = country;
-		this.satisfied = satisfied;
+		setSatisfied(satisfied);
 	}
 
-	//Constructor con los parámetros description, customerId, satisfies
+	//Constructor con los parámetros description, customerId, satisfied
 	public Compra(String description, Integer customerId, Boolean satisfied) {
-		this.stockCode = "SIN CODIGO";
+		this.stockCode = "000000";
 		this.description = description;
 		purchase = new Purchase(1, 1.0);
 		this.purchaseDate = LocalDateTime.of(2020, 1, 1, 12, 00);
@@ -76,14 +77,17 @@ public class Compra implements Comparable<Compra>{
 	}
 
 	public void setStockCode(String stockCode) {
+		Checkers.check("El codigo de stock no contiene el numero de caracteres correcto (<=6)", stockCode.length() <= 6);
 		this.stockCode = stockCode;
 	}
 
 	public void setSatisfied(Boolean satisfied) {
+		Checkers.checkNoNull(satisfied);
 		this.satisfied = satisfied;
 	}
 
 	public void setPurchaseDate(LocalDateTime purchaseDate) {
+		Checkers.check("La fecha no es correcta", purchaseDate.isBefore(LocalDateTime.now()));
 		this.purchaseDate = purchaseDate;
 	}
 
@@ -147,7 +151,6 @@ public class Compra implements Comparable<Compra>{
 	}
 
 	public boolean equals(Object obj) {
-		
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -162,7 +165,6 @@ public class Compra implements Comparable<Compra>{
 
 	//Criterio de Orden natural
 	public int compareTo(Compra c) {
-		
 		int res = getStockCode().compareTo(c.getStockCode());
 		if(res == 0) {
 			res = getDescription().compareTo(c.getDescription());

@@ -36,7 +36,7 @@ public class Checkers {
 						Thread.currentThread().getStackTrace()[2].getClassName() +
 						"." + 
 						Thread.currentThread().getStackTrace()[2].getMethodName() +
-						": el parÃ¡metro " + (i + 1) + " es nulo");
+						": el parametro " + (i + 1) + " es nulo");
 			}
 		}
 	}
