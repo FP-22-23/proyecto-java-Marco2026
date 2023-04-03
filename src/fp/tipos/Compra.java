@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import fp.common.Purchase;
 import fp.common.TypeCountry;
@@ -146,18 +148,14 @@ public class Compra implements Comparable<Compra>{
 						", customerId = " + getCustomerId() + ", country = " + getCountry()	+ ", satisfied = " + getSatisfied() + "]";
 	}
 	
-	public List<String> getKeywords(){
-		//La propiedad derivada getKeywords recoge las palabras clave de la descripcion. Como aún no hemos dado
-		//hashSet en clase de teoría, he tenido que implementarla con una lista (lo cambiaré en la próxima entrega,
-		//ya que no quiero que haya palabras repetidas y el set me ayudaría a eliminar líneas de código.
-		List<String> keywords = new LinkedList<>();
+	public SortedSet<String> getKeywords(){
+		//La propiedad derivada getKeywords recoge las palabras clave de la descripcion basándose en su longitud.
+		SortedSet<String> keywords = new TreeSet<>();
 		String splitDescription [] = description.split(" "); 
 		for(String p:splitDescription) {
 			p = p.trim();
 			if(p.length() >= 4) {
-				if(!(keywords.contains(p))) {
-					keywords.add(p.trim());	
-				}
+				keywords.add(p.trim());	
 			}
 		}
 		return keywords;
