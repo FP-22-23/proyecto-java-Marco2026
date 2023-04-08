@@ -1,6 +1,8 @@
 package fp.tipos.test;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import fp.common.Purchase;
 import fp.common.TypeCountry;
@@ -71,7 +73,16 @@ public class TestCompra {
 		System.out.println("- c1 y c2: " + c1.compareTo(c2));
 		System.out.println("- c1 y c3: " + c1.compareTo(c3));
 		
-		
+		List<Character> lista = new ArrayList<>();
+		Character cc1 = 'A';
+		Character cc2 = 'B';
+		Character cc3 = 'C';
+		lista.add(cc1);
+		lista.add(cc2);
+		lista.add(cc3);
+		System.out.println(lista);
+		lista.remove(cc3);
+		System.out.println(lista);
 	}
 
 }
