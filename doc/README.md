@@ -32,7 +32,7 @@ Los tipos que se han implementado en el proyecto son los siguientes:
 Consiste en una compra concreta.
 **Propiedades**:
 
-- *stockCode*, de tipo _String_, consultable y modificable.
+- _stockCode_, de tipo _String_, consultable y modificable.
 - _description_, de tipo _String_, consultable.
 - _purchase_, de tipo _Purchase_, consultable.
 - _purchaseDate_, de tipo _LocalDateTime_, consultable y modificable.
@@ -75,4 +75,11 @@ Clase de Factoría para construir objetos de tipo Compras
 ### Tipo Contenedor - Compras
 Clase contenedora de los objetos de tipo Compra.
 **Propiedades:**
-- 
+- compras, de tipo List<Compra>, consultable. Lista de compras.
+**Constructores:**
+- C1: Constructor por defecto. Crea un objeto de tipo Compras sin ninguna compra almacenada.
+- C2: Constructor con un parámetro de tipo Collection<Compra>. Crea un objeto de tipo Compras con las compras incluidas en la colección dada como parámetro.
+- C3: Constructor con un parámetro de tipo Stream<Compra>. Crea un objeto de tipo Compras con las compras incluidas en el Stream dado.
+**Criterio de igualdad:** Dos compras son iguales si lo son sus propiedades compras.
+**Otras operaciones:**
+
