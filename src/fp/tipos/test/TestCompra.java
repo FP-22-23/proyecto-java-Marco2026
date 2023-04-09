@@ -1,9 +1,6 @@
 package fp.tipos.test;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import fp.common.Purchase;
 import fp.common.TypeCountry;
 import fp.tipos.Compra;
@@ -11,22 +8,22 @@ import fp.tipos.Compra;
 public class TestCompra {
 
 	public static void main(String[] args) {
+		
+		testCompra();
+		
+	}
+	
+	private static void testCompra() {
 		//Creación de objetos
-		
-		////Tipo Auxiliar Purchase
 		Purchase p1 = new Purchase(6, 25.5);
-		Purchase p2 = new Purchase(5, 33.9);
-		System.out.println("Todos los métodos del tipo auxiliar Purchase: ");
-		System.out.println("- Cantidad: " + p1.quantity());
-		System.out.println("- Precio por unidad: " + p1.unitPrice() + "\n");
-		System.out.println("-----------------------------------------------------------------------");
 		
-		////Constructor 1
+		//Constructor 1
 		Compra c1 = new Compra("85123A", "WHITE HANGING HEART T-LIGHT HOLDER", p1, LocalDateTime.of(2010,1,12,8,26), 17850, TypeCountry.UNITED_KINGDOM, true);
 		Compra c3 = new Compra("85123A", "WHITE HANGING HEART T-LIGHT HOLDER", p1, LocalDateTime.of(2010,1,12,8,26), 17850, TypeCountry.UNITED_KINGDOM, true);
-		////Constructor 2
-		Compra c2 = new Compra("WHITE METAL LANTERN", 17850, false);
 		
+		//Constructor 2
+		Compra c2 = new Compra("WHITE METAL LANTERN", 17850, false);
+			
 		System.out.println("Todos los metodos get realizados en el Objeto Compra c1: ");
 		System.out.println("\n- Código de Stock: " + c1.getStockCode());
 		System.out.println("- Descripcion: " + c1.getDescription());
@@ -73,16 +70,6 @@ public class TestCompra {
 		System.out.println("- c1 y c2: " + c1.compareTo(c2));
 		System.out.println("- c1 y c3: " + c1.compareTo(c3));
 		
-		List<Character> lista = new ArrayList<>();
-		Character cc1 = 'A';
-		Character cc2 = 'B';
-		Character cc3 = 'C';
-		lista.add(cc1);
-		lista.add(cc2);
-		lista.add(cc3);
-		System.out.println(lista);
-		lista.remove(cc3);
-		System.out.println(lista);
-	}
-
+		}
+	
 }

@@ -4,10 +4,12 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import fp.biblioteca.Libro;
 import fp.common.TypeCountry;
 import fp.utiles.Checkers;
 
@@ -17,15 +19,15 @@ public class ComprasImpl implements Compras {
 	//Constructores
 
 	/**
-	 * Crea un objeto Compras vacío
+	 * Crea un objeto Compras vacio
 	 */
 	public ComprasImpl() {
 		compras = new LinkedList<Compra>();
-	}
+	}		
 	
 	/**
-	 * @param compras colección de compras
-	 * Crea un objeto a partir de una colección de compras
+	 * @param compras coleccion de compras
+	 * Crea un objeto a partir de una coleccion de compras
 	 */
 	public ComprasImpl(Collection<Compra> compras) {
 		this.compras = new LinkedList<Compra>(compras);
@@ -90,7 +92,7 @@ public class ComprasImpl implements Compras {
 	 * 
 	 * @param customerId: ID del cliente que realizó la compra
 	 * @param n: número del que se quiere saber si se ha comprado menos del número n de unidades
-	 * Esta función dice si el cliente ha comprado en alguna de sus compras menos unidades que el numero n
+	 * @return si el cliente ha comprado en alguna de sus compras menos unidades que el numero n
 	 */
 	public Boolean clienteCompraMenosDe(Integer customerId, Integer n) {
 		Boolean res = false;
@@ -109,7 +111,7 @@ public class ComprasImpl implements Compras {
 	 * Tipo: contador
 	 * 
 	 * @param customerId: ID del cliente que realizó la compra
-	 * Esta función cuenta el numero de compras realizadas por un cliente dado
+	 * @return el numero de compras realizadas por un cliente dado
 	 */
 	public Integer numComprasPorCliente(Integer customerId) {
 		Integer res = 0;
@@ -126,24 +128,60 @@ public class ComprasImpl implements Compras {
 	 * 
 	 * Tipo: selección con filtrado
 	 * 
-	 * @param customerId: ID del cliente que realizó la compra
-	 * @param n: número del que se quiere saber si se ha comprado menos del número n de unidades
-	 * Esta función dice si el cliente ha comprado en alguna de sus compras menos unidades que el numero n
+	 * @param country: País en el que se buscan las compras
+	 * @param n: Dinero mínimo sobre el que se quiere saber si una compra ha sido más cara
+	 * @return las compras que fueron más caras que n en el país country
 	 */
 	public List<Compra> encuentraComprasMayoresPorPais(TypeCountry country, Double n) {
 		List<Compra> res = new LinkedList<Compra>();
 		for(Compra compra:compras) {
-			if(compra.getCountry().equals(country) && compra.getPurchase().getTotalPurchase() > n) {
+			if(compra.getCountry().equals(country) && compra.getFinalPrice() > n) {
 				res.add(compra);
 			}
 		}
 		return res;
 	}
 	
+	/**
+	 * FUNCION TIPO 4
+	 * 
+	 * Tipo: Agrupacion en Map
+	 * 
+	 * @return las compras que fueron más caras que n en el país country
+	 */
+	public SortedMap<TypeCountry, SortedSet<String>> agrupaKeywordsPorPais() {
+		SortedMap<TypeCountry, SortedSet<String>> res = new TreeMap<>();
+		for(Compra compra:compras) {
+			TypeCountry clave = compra.getCountry();
+			if(res.containsKey(clave)) {
+				res.get(clave).addAll(compra.getKeywords());
+			} else {
+				SortedSet<String> ss = new TreeSet<>();
+				ss.addAll(compra.getKeywords());
+				res.put(clave, ss);
+			}
+		}
+		return res;
+	}
 	
-	
-	
-	
-	
-	
+	/**
+	 * FUNCION TIPO 5
+	 * 
+	 * Tipo: Conteo en Map
+	 * 
+	 * @return El gasto total de cada cliente
+	 */
+	public SortedMap<Integer, Double> cuentaGastoPorCliente() {
+		SortedMap<Integer, Double> res = new TreeMap<>();
+		for(Compra compra:compras) {
+			Integer clave = compra.getCustomerId();
+			if(res.containsKey(clave)) {
+				res.put(clave, res.get(clave) + compra.getFinalPrice()); 
+			} else {
+				Double gasto = compra.getFinalPrice();
+				res.put(clave, gasto);
+			}
+		}
+		return res;
+	}
 }

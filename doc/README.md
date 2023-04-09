@@ -32,7 +32,7 @@ Los tipos que se han implementado en el proyecto son los siguientes:
 Consiste en una compra concreta.
 **Propiedades**:
 
-- _stockCode_, de tipo _String_, consultable y modificable.
+- *stockCode*, de tipo _String_, consultable y modificable.
 - _description_, de tipo _String_, consultable.
 - _purchase_, de tipo _Purchase_, consultable.
 - _purchaseDate_, de tipo _LocalDateTime_, consultable y modificable.
@@ -67,3 +67,12 @@ Consiste en una compra concreta.
 
 - TypeCountry, enum. Puede tomar los valores GERMANY, AUSTRALIA, EIRE, FRANCE, UNITED_KINGDOM, NORWAY, NETHERLANDS, OTHER.
 - Purchase, record. Formado por las propiedades quantity y unitPrice.
+
+### Factoría - FactoriaCompras
+Clase de Factoría para construir objetos de tipo Compras
+- Compras leerCompras(String nombreFichero): Crea un objeto de tipo Compras a partir de los datos obtenidos en el archivo csv, cuya ruta es dada como parámetro.
+
+### Tipo Contenedor - Compras
+Clase contenedora de los objetos de tipo Compra.
+**Propiedades:**
+- 

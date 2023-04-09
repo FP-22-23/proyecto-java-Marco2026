@@ -1,12 +1,9 @@
 package fp.tipos;
 
 import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 import fp.common.Purchase;
 import fp.common.TypeCountry;
 import fp.utiles.Checkers;
@@ -79,7 +76,7 @@ public class Compra implements Comparable<Compra>{
 	}
 
 	public void setStockCode(String stockCode) {
-		Checkers.check("El codigo de stock no contiene el numero de caracteres correcto (<=6)", stockCode.length() <= 6);
+		Checkers.check("El codigo de stock no contiene el numero de caracteres correcto (<=7)", stockCode.length() <= 7);
 		this.stockCode = stockCode;
 	}
 
