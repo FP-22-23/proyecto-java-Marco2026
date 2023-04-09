@@ -15,9 +15,10 @@ import fp.utiles.Checkers;
 
 public class ComprasImpl implements Compras {
 
+	//Atributos
 	private List<Compra> compras;
+	
 	//Constructores
-
 	/**
 	 * Crea un objeto Compras vacio
 	 */
@@ -80,7 +81,7 @@ public class ComprasImpl implements Compras {
 	}
 	
 	public void eliminarElem(int indice) {
-		Checkers.check("Índice fuera de los límites", indice < compras.size());
+		Checkers.check("I�ndice fuera de los limites", indice < compras.size());
 		compras.remove(indice);
 	}
 	
@@ -90,8 +91,8 @@ public class ComprasImpl implements Compras {
 	 * 
 	 * Tipo: existe
 	 * 
-	 * @param customerId: ID del cliente que realizó la compra
-	 * @param n: número del que se quiere saber si se ha comprado menos del número n de unidades
+	 * @param customerId: ID del cliente que realizo la compra
+	 * @param n: numero del que se quiere saber si se ha comprado menos del numero n de unidades
 	 * @return si el cliente ha comprado en alguna de sus compras menos unidades que el numero n
 	 */
 	public Boolean clienteCompraMenosDe(Integer customerId, Integer n) {
@@ -110,7 +111,7 @@ public class ComprasImpl implements Compras {
 	 * 
 	 * Tipo: contador
 	 * 
-	 * @param customerId: ID del cliente que realizó la compra
+	 * @param customerId: ID del cliente que realizo la compra
 	 * @return el numero de compras realizadas por un cliente dado
 	 */
 	public Integer numComprasPorCliente(Integer customerId) {
@@ -126,11 +127,11 @@ public class ComprasImpl implements Compras {
 	/**
 	 * FUNCION TIPO 3
 	 * 
-	 * Tipo: selección con filtrado
+	 * Tipo: seleccion con filtrado
 	 * 
-	 * @param country: País en el que se buscan las compras
-	 * @param n: Dinero mínimo sobre el que se quiere saber si una compra ha sido más cara
-	 * @return las compras que fueron más caras que n en el país country
+	 * @param country: Pais en el que se buscan las compras
+	 * @param n: Dinero minimo sobre el que se quiere saber si una compra ha sido mas cara
+	 * @return las compras que fueron mas caras que n en el pais country
 	 */
 	public List<Compra> encuentraComprasMayoresPorPais(TypeCountry country, Double n) {
 		List<Compra> res = new LinkedList<Compra>();
@@ -147,7 +148,7 @@ public class ComprasImpl implements Compras {
 	 * 
 	 * Tipo: Agrupacion en Map
 	 * 
-	 * @return las compras que fueron más caras que n en el país country
+	 * @return las compras que fueron mas caras que n en el pais country
 	 */
 	public SortedMap<TypeCountry, SortedSet<String>> agrupaKeywordsPorPais() {
 		SortedMap<TypeCountry, SortedSet<String>> res = new TreeMap<>();

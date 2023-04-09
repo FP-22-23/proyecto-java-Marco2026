@@ -14,7 +14,7 @@ public class TestCompra {
 	}
 	
 	private static void testCompra() {
-		//Creación de objetos
+		//Creacion de objetos
 		Purchase p1 = new Purchase(6, 25.5);
 		
 		//Constructor 1
@@ -25,7 +25,7 @@ public class TestCompra {
 		Compra c2 = new Compra("WHITE METAL LANTERN", 17850, false);
 			
 		System.out.println("Todos los metodos get realizados en el Objeto Compra c1: ");
-		System.out.println("\n- Código de Stock: " + c1.getStockCode());
+		System.out.println("\n- Codigo de Stock: " + c1.getStockCode());
 		System.out.println("- Descripcion: " + c1.getDescription());
 		System.out.println("- Compra: " + c1.getPurchase());
 		System.out.println("- Fecha de la compra: " + c1.getPurchaseDate());

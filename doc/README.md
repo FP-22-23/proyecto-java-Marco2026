@@ -67,7 +67,7 @@ Consiste en una compra concreta.
 
 #### Tipos auxiliares
 
-- _TypeCountry_, de tipo _enum_. Puede tomar los valores *GERMANY, AUSTRALIA, EIRE, FRANCE, UNITED_KINGDOM, NORWAY, NETHERLANDS, OTHER*.
+- _TypeCountry_, de tipo _Enum_. Puede tomar los valores *GERMANY, AUSTRALIA, EIRE, FRANCE, UNITED_KINGDOM, NORWAY, NETHERLANDS, OTHER*.
 - _Purchase_, de tipo _record_. Formado por las propiedades _quantity_ y _unitPrice_.
 
 ### Factoría - FactoriaCompras
