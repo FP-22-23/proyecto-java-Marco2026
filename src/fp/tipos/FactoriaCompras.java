@@ -12,8 +12,8 @@ import fp.utiles.Checkers;
 
 public class FactoriaCompras {
 
-	public static ComprasImpl leerCompras(String rutaFichero) {
-		ComprasImpl res = null;
+	public static Compras leerCompras(String rutaFichero) {
+		Compras res = null;
 		try {
 			Stream<Compra> sc = 
 					Files.lines(Paths.get(rutaFichero)).
