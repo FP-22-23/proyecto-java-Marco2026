@@ -13,10 +13,13 @@ public class TestFactoriaCompras {
 	}
 
 	private static void testLeerCompras(String fichero) {
+		
 		try {
+			
 			System.out.println("\n-------------------- TestLeerCompras ---------------------------");
 			Compras compras = FactoriaCompras.leerCompras(fichero);
 			System.out.println("Compras: "+ compras);
+			
 		} catch(Exception e) {
 			System.out.println("Capturada excepción esperada: " + e.getMessage());
 		}
