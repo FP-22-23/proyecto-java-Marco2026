@@ -11,6 +11,9 @@ public class TestCompras {
 		
 		try {
 			
+			//Entrega 2
+			System.out.println("\n========== Entrega 2 ==========\n");
+			//Lista de Compras
 			Compras compras = FactoriaCompras.leerCompras("data/DatosProyecto.csv");
 			
 			//Test del objeto Compras
@@ -18,26 +21,72 @@ public class TestCompras {
 			
 			//Test de la Funcion 1
 			System.out.println("\nTest de la Funcion 1: clienteCompraMenosDe");
-			testFuncion1(compras, 15165, 3);
-			testFuncion1(compras, 15165, 1);
+			testClienteCompraMenosDe(compras, 15165, 3);
+			testClienteCompraMenosDe(compras, 15165, 1);
 			
 			//Test de la Funcion 2
 			System.out.println("\nTest de la Funcion 2: numComprasPorCliente");
-			testFuncion2(compras, 15165);
-			testFuncion2(compras, 17511);
+			testNumComprasPorCliente(compras, 15165);
+			testNumComprasPorCliente(compras, 17511);
 			
 			//Test de la Funcion 3
 			System.out.println("\nTest de la Funcion 3: encuentraComprasMayoresPorPais");
-			testFuncion3(compras, TypeCountry.UNITED_KINGDOM, 260.0);
-			testFuncion3(compras, TypeCountry.GERMANY, 235.0);
+			testEncuentraComprasMayoresPorPais(compras, TypeCountry.UNITED_KINGDOM, 260.0);
+			testEncuentraComprasMayoresPorPais(compras, TypeCountry.GERMANY, 235.0);
 			
 			//Test de la Funcion 4
 			System.out.println("\nTest de la Funcion 4: agrupaKeywordsPorPais");
-			testFuncion4(compras);
+			testAgrupaKeywordsPorPais(compras);
 			
 			//Test de la Funcion 5
 			System.out.println("\nTest de la Funcion 5: cuentaGastoPorCliente");
-			testFuncion5(compras);
+			testCuentaGastoPorCliente(compras);
+			
+			
+			//Entrega 3
+			System.out.println("\n========== Entrega 3 ==========\n");
+			//Test de la Funcion 1
+			System.out.println("\nTest de la Funcion 1: clienteCompraMenosDeStream");
+			testClienteCompraMenosDeStream(compras, 15165, 3);
+			testClienteCompraMenosDeStream(compras, 15165, 1);
+			
+			//Test de la Funcion 2
+			System.out.println("\nTest de la Funcion 2: numComprasPorClienteStream");
+			testNumComprasPorClienteStream(compras, 15165);
+			testNumComprasPorClienteStream(compras, 17511);
+			
+			//Test de la Funcion 3
+			System.out.println("\nTest de la Funcion 3: encuentraComprasMayoresPorPaisStream");
+			testEncuentraComprasMayoresPorPaisStream(compras, TypeCountry.UNITED_KINGDOM, 260.0);
+			testEncuentraComprasMayoresPorPaisStream(compras, TypeCountry.GERMANY, 235.0);
+			
+			//Test de la Funcion 4
+			System.out.println("\nTest de la Funcion 4: getCompraMayorPorCliente");
+			testGetCompraMayorPorCliente(compras, 17511);
+			
+			//Test de la Funcion 5
+			System.out.println("\nTest de la Funcion 5: getIdClientesPorPaisOrdenados");
+			testGetIdClientesPorPaisOrdenados(compras, TypeCountry.OTHER);
+			
+			//Test de la Funcion 6
+			System.out.println("\nTest de la Funcion 6: agrupaKeywordsPorPaisStream");
+			testAgrupaKeywordsPorPaisStream(compras);
+			
+			//Test de la Funcion 7
+			System.out.println("\nTest de la Funcion 7: getCompraMasCaraPorFecha");
+			testGetCompraMasCaraPorFecha(compras);
+			
+			//Test de la Funcion 8
+			System.out.println("\nTest de la Funcion 8: getCompraMasBarataPorCliente");
+			testGetCompraMasBarataPorCliente(compras);
+			
+			//Test de la Funcion 9
+			System.out.println("\nTest de la Funcion 9: getNDescripcionesMasCortasPorPais");
+			testGetNDescripcionesMasCortasPorPais(compras, 2);
+			
+			//Test de la Funcion 10
+			System.out.println("\nTest de la Funcion 10: compraMasCaraPorHora");
+			testCompraMasCaraPorHora(compras);
 			
 		} catch(IllegalArgumentException iae) {
 			System.out.println("Capturada excepción esperada: " + iae.getMessage());
@@ -69,7 +118,7 @@ public class TestCompras {
 		}
 	}
 	
-	private static void testFuncion1(Compras compras, Integer customerId, Integer n) {
+	private static void testClienteCompraMenosDe(Compras compras, Integer customerId, Integer n) {
 		try {
 			System.out.println(compras.clienteCompraMenosDe(customerId, n));
 		} catch(IllegalArgumentException iae) {
@@ -77,7 +126,7 @@ public class TestCompras {
 		}
 	}
 	
-	private static void testFuncion2(Compras compras, Integer customerId) {
+	private static void testNumComprasPorCliente(Compras compras, Integer customerId) {
 		try {
 			System.out.println(compras.numComprasPorCliente(customerId));
 		} catch(IllegalArgumentException iae) {
@@ -86,7 +135,7 @@ public class TestCompras {
 		
 	}
 	
-	private static void testFuncion3(Compras compras, TypeCountry country, Double n) {
+	private static void testEncuentraComprasMayoresPorPais(Compras compras, TypeCountry country, Double n) {
 		try {
 			System.out.println(compras.encuentraComprasMayoresPorPais(country, n));
 		} catch(IllegalArgumentException iae) {
@@ -94,7 +143,7 @@ public class TestCompras {
 		}
 	}
 	
-	private static void testFuncion4(Compras compras) {
+	private static void testAgrupaKeywordsPorPais(Compras compras) {
 		try {
 			System.out.println(compras.agrupaKeywordsPorPais());
 		} catch(IllegalArgumentException iae) {
@@ -102,9 +151,90 @@ public class TestCompras {
 		}
 	}
 	
-	private static void testFuncion5(Compras compras) {
+	private static void testCuentaGastoPorCliente(Compras compras) {
 		try {
 			System.out.println(compras.cuentaGastoPorCliente());
+		} catch(IllegalArgumentException iae) {
+			System.out.println("Capturada excepción esperada: " + iae.getMessage());
+		}
+	}
+	
+	//Entrega 3
+	private static void testClienteCompraMenosDeStream(Compras compras, Integer customerId, Integer n) {
+		try {
+			System.out.println(compras.clienteCompraMenosDeStream(customerId, n));
+		} catch(IllegalArgumentException iae) {
+			System.out.println("Capturada excepción esperada: " + iae.getMessage());
+		}
+	}
+	
+	private static void testNumComprasPorClienteStream(Compras compras, Integer customerId) {
+		try {
+			System.out.println(compras.numComprasPorClienteStream(customerId));
+		} catch(IllegalArgumentException iae) {
+			System.out.println("Capturada excepción esperada: " + iae.getMessage());
+		}
+	}
+	
+	private static void testEncuentraComprasMayoresPorPaisStream(Compras compras, TypeCountry country, Double n) {
+		try {
+			System.out.println(compras.encuentraComprasMayoresPorPaisStream(country, n));
+		} catch(IllegalArgumentException iae) {
+			System.out.println("Capturada excepción esperada: " + iae.getMessage());
+		}
+	}
+	
+	private static void testGetCompraMayorPorCliente(Compras compras, Integer customerId) {
+		try {
+			System.out.println(compras.getCompraMayorPorCliente(customerId));
+		} catch(IllegalArgumentException iae) {
+			System.out.println("Capturada excepción esperada: " + iae.getMessage());
+		}
+	}
+	
+	private static void testGetIdClientesPorPaisOrdenados(Compras compras, TypeCountry country) {
+		try {
+			System.out.println(compras.getIdClientesPorPaisOrdenados(country));
+		} catch(IllegalArgumentException iae) {
+			System.out.println("Capturada excepción esperada: " + iae.getMessage());
+		}
+	}
+	
+	private static void testAgrupaKeywordsPorPaisStream(Compras compras) {
+		try {
+			System.out.println(compras.agrupaKeywordsPorPaisStream());
+		} catch(IllegalArgumentException iae) {
+			System.out.println("Capturada excepción esperada: " + iae.getMessage());
+		}
+	}
+	
+	private static void testGetCompraMasCaraPorFecha(Compras compras) {
+		try {
+			System.out.println(compras.getCompraMasCaraPorFecha());
+		} catch(IllegalArgumentException iae) {
+			System.out.println("Capturada excepción esperada: " + iae.getMessage());
+		}
+	}
+	
+	private static void testGetCompraMasBarataPorCliente(Compras compras) {
+		try {
+			System.out.println(compras.getCompraMasBarataPorCliente());
+		} catch(IllegalArgumentException iae) {
+			System.out.println("Capturada excepción esperada: " + iae.getMessage());
+		}
+	}
+	
+	private static void testGetNDescripcionesMasCortasPorPais(Compras compras, Integer n) {
+		try {
+			System.out.println(compras.getNDescripcionesMasCortasPorPais(n));
+		} catch(IllegalArgumentException iae) {
+			System.out.println("Capturada excepción esperada: " + iae.getMessage());
+		}
+	}
+	
+	private static void testCompraMasCaraPorHora(Compras compras) {
+		try {
+			System.out.println(compras.compraMasCaraPorHora());
 		} catch(IllegalArgumentException iae) {
 			System.out.println("Capturada excepción esperada: " + iae.getMessage());
 		}

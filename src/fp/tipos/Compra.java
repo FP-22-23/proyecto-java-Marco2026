@@ -22,7 +22,7 @@ public class Compra implements Comparable<Compra>{
 	//Constructores
 	//Entrega 1
 	
-	//Constructor con todos los parámetros
+	//Constructor con todos los parametros
 	public Compra(String stockCode, String description, Purchase purchase, LocalDateTime purchaseDate, 
 				  Integer customerId, TypeCountry country, Boolean satisfied) {
 		setStockCode(stockCode);
@@ -34,7 +34,7 @@ public class Compra implements Comparable<Compra>{
 		setSatisfied(satisfied);
 	}
 
-	//Constructor con los parámetros description, customerId, satisfied
+	//Constructor con los parametros description, customerId, satisfied
 	public Compra(String description, Integer customerId, Boolean satisfied) {
 		this.stockCode = "000000";
 		this.description = description;
@@ -138,7 +138,7 @@ public class Compra implements Comparable<Compra>{
 		return purchase.getTotalPurchase() + this.getFee();
 	}
 
-	//Representación como cadena
+	//Representacion como cadena
 	public String toString() {
 		return "Compra [stockCode = " + getStockCode() + ", Description = " + getDescription() + ", purchase = " + "(" + "quantity = " + 
 						purchase.quantity() + ", " + "unitPrice = " +  purchase.unitPrice() +")" + ", purchaseDate = " + getPurchaseDate() +
@@ -146,7 +146,7 @@ public class Compra implements Comparable<Compra>{
 	}
 	
 	public SortedSet<String> getKeywords(){
-		//La propiedad derivada getKeywords recoge las palabras clave de la descripcion basándose en su longitud.
+		//La propiedad derivada getKeywords recoge las palabras clave de la descripcion basandose en su longitud.
 		SortedSet<String> keywords = new TreeSet<>();
 		String splitDescription [] = description.split(" "); 
 		for(String p:splitDescription) {
