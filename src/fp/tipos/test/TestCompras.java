@@ -66,7 +66,7 @@ public class TestCompras {
 			
 			//Test de la Funcion 5
 			System.out.println("\nTest de la Funcion 5: getIdClientesPorPaisOrdenados");
-			testGetIdClientesPorPaisOrdenados(compras, TypeCountry.OTHER);
+			testGetIdClientesPorPaisOrdenados(compras, TypeCountry.UNITED_KINGDOM);
 			
 			//Test de la Funcion 6
 			System.out.println("\nTest de la Funcion 6: agrupaKeywordsPorPaisStream");

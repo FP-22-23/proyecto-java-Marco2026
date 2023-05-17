@@ -158,15 +158,15 @@ public class ComprasImpl implements Compras {
 	 * 		   los valores son conjuntos de palabras clave usadas por clientes de ese pais
 	 */
 	public SortedMap<TypeCountry, SortedSet<String>> agrupaKeywordsPorPais() {
-		SortedMap<TypeCountry, SortedSet<String>> res = new TreeMap<>();
-		for(Compra compra:compras) {
-			TypeCountry clave = compra.getCountry();
-			if(res.containsKey(clave)) {
-				res.get(clave).addAll(compra.getKeywords());
-			} else {
-				SortedSet<String> ss = new TreeSet<>();
-				ss.addAll(compra.getKeywords());
-				res.put(clave, ss);
+		SortedMap<TypeCountry, SortedSet<String>> res = new TreeMap<>(); //Creamos el SortedMap
+		for(Compra compra:compras) { //Recorremos el bucle
+			TypeCountry clave = compra.getCountry(); //Asignamos el valor de la clave
+			if(res.containsKey(clave)) { //La clave ya está en el Map
+				res.get(clave).addAll(compra.getKeywords()); //Anyado al SortedSet los nuevos valores
+			} else { //La clave aún no está en el Map
+				SortedSet<String> ss = new TreeSet<>(); //Creamos un SortedSet
+				ss.addAll(compra.getKeywords()); //Le anyado las keywords
+				res.put(clave, ss); //Pongo la pareja de clave y el valor con el SortedSet en el Map
 			}
 		}
 		return res;
@@ -204,8 +204,9 @@ public class ComprasImpl implements Compras {
 	 * @return si el cliente ha comprado en alguna de sus compras menos unidades que el numero n
 	 */
 	public Boolean clienteCompraMenosDeStream(Integer customerId, Integer n) {
-		return compras.stream()
-					  .anyMatch(v -> v.getCustomerId().equals(customerId) && v.getPurchase().quantity() < n);
+		return compras.stream() //Stream<Compra>
+					  .anyMatch(v -> v.getCustomerId().equals(customerId) && v.getPurchase().quantity() < n); //Boolean
+					//anyMatch se encarga de encontrar al menos 1 valor que cumpla los requisitos indicados
 	}
 	
 	/**
@@ -217,10 +218,10 @@ public class ComprasImpl implements Compras {
 	 * @return el numero de compras realizadas por un cliente dado
 	 */
 	public Integer numComprasPorClienteStream(Integer customerId) {
-		Long res = compras.stream()
-					  	  .filter(c -> c.getCustomerId().equals(customerId))
-					  	  .count();
-		return res.intValue();
+		Long res = compras.stream() //Stream<Compra>
+					  	  .filter(c -> c.getCustomerId().equals(customerId)) //Stream<Compra> filtrado
+					  	  .count(); //Long
+		return res.intValue(); //Devolvemos res.intValue() para deshacernos del Long
 	}
 	
 	/**
@@ -233,9 +234,9 @@ public class ComprasImpl implements Compras {
 	 * @return las compras que fueron mas caras que n en el pais country
 	 */
 	public List<Compra> encuentraComprasMayoresPorPaisStream(TypeCountry country, Double n) {
-		return compras.stream()
-					  .filter(c -> c.getCountry().equals(country) && c.getFinalPrice() > n)
-					  .collect(Collectors.toList());
+		return compras.stream() //Stream<Compra>
+					  .filter(c -> c.getCountry().equals(country) && c.getFinalPrice() > n) //Stream<Compra> filtrado
+					  .collect(Collectors.toList()); //List<Compra>
 	}
 	
 	/**
@@ -243,15 +244,15 @@ public class ComprasImpl implements Compras {
 	 * 
 	 * Tipo: Un máximo con filtrado
 	 * 
-	 * @param customerId: Id del cliente sobre el que queremos encontrar su compra más cara
-	 * @return la compra mas cara del cliente dado como parámetro
+	 * @param customerId: Id del cliente sobre el que queremos encontrar su compra mas cara
+	 * @return la compra mas cara del cliente dado como parametro
 	 */
 	public Compra getCompraMayorPorCliente(Integer customerId) {
-		Comparator<Compra> comp = Comparator.comparing(Compra::getFinalPrice);
-		return compras.stream()
-					  .filter(c -> c.getCustomerId().equals(customerId))
-					  .max(comp)
-					  .orElse(null);
+		Comparator<Compra> comp = Comparator.comparing(Compra::getFinalPrice); //Comparator que compara los objetos de tipo Compra por su propiedad derivada getFinalPrice()
+		return compras.stream() //Stream<Compra>
+					  .filter(c -> c.getCustomerId().equals(customerId)) //Stream<Compra> filtrado
+					  .max(comp) //Optional<Compra>
+					  .orElse(null); //Compra / null
 	}
 	
 	/**
@@ -262,12 +263,12 @@ public class ComprasImpl implements Compras {
 	 * @return una lista ordenada por el orden natural de Integer de los ID de los clientes
 	 */
 	public List<Integer> getIdClientesPorPaisOrdenados(TypeCountry Country) {
-		return compras.stream()
-					  .filter(c -> c.getCountry().equals(Country))
-					  .map(Compra::getCustomerId)
-					  .distinct()
-					  .sorted()
-					  .collect(Collectors.toList());
+		return compras.stream() //Stream<Compra>
+					  .filter(c -> c.getCountry().equals(Country)) //Stream<Compra> filtrado
+					  .map(Compra::getCustomerId) //Stream<Integer>
+					  .distinct() //Stream<Integer> sin duplicados
+					  .sorted() //Stream<Integer> ordenado
+					  .collect(Collectors.toList()); //List<Integer>
 	}
 	
 	/**
@@ -279,13 +280,13 @@ public class ComprasImpl implements Compras {
 	 * 		   los valores son conjuntos de palabras clave usadas por clientes de ese pais
 	 */
 	public SortedMap<TypeCountry, SortedSet<String>> agrupaKeywordsPorPaisStream() {
-		 return compras.stream()
-				 	   .collect(Collectors.groupingBy(
-						         Compra::getCountry,
-						         TreeMap::new,
-						         Collectors.flatMapping(
-						        		 c -> c.getKeywords().stream(),
-						        		 Collectors.toCollection(TreeSet::new)
+		 return compras.stream() //Stream<Compra>
+				 	   .collect(Collectors.groupingBy( //Agrupamos en un SortedMap
+						         Compra::getCountry, //Funcion claves
+						         TreeMap::new, //Recipiente de la informacion
+						         Collectors.flatMapping( //"Aplanamos" los valores
+						        		 c -> c.getKeywords().stream(), //Metemos las keywords en streams
+						        		 Collectors.toCollection(TreeSet::new) //El resultado de "aplanar" los streams se mete en un nuevo SortedSet
 						        		 )
 							     ));
 	}
@@ -299,14 +300,13 @@ public class ComprasImpl implements Compras {
 	 * 		   los valores son la compra más cara que se realizo
 	 */
 	public Map<LocalDateTime, Compra> getCompraMasCaraPorFecha() {
-	Comparator<Compra> comp = Comparator.comparing(Compra::getFinalPrice);
-	
-	return compras.stream()
-				  .collect(Collectors.groupingBy(
-						   Compra::getPurchaseDate,
-						   Collectors.collectingAndThen(
-							 	   Collectors.maxBy(comp),
-								   Optional::get
+	Comparator<Compra> comp = Comparator.comparing(Compra::getFinalPrice); //Comparator que compara el objeto de tipo Compra por su propiedad derivada getFinalPrice
+	return compras.stream() //Stream<Compra>
+				  .collect(Collectors.groupingBy( //Agrupamos el Stream
+						   Compra::getPurchaseDate, //Funcion claves (por fecha)
+						   Collectors.collectingAndThen( //Usamos collectingAndThen para transformar y luego recolectar
+							 	   Collectors.maxBy(comp), //Transformacion: Obtener el maximo
+								   Optional::get //Tomamos ese maximo (que viene dado en Optional<Compra>
 								   )
 						   ));
 	}
@@ -320,14 +320,13 @@ public class ComprasImpl implements Compras {
 	 * 		   los valores son la compra más barata que realizaron
 	 */
 	public Map<Integer, Compra> getCompraMasBarataPorCliente() {
-	Comparator<Compra> comp = Comparator.comparing(Compra::getFinalPrice);
-	
-	return compras.stream()
-				  .collect(Collectors.groupingBy(
-						   Compra::getCustomerId,
-						   Collectors.collectingAndThen(
-							 	   Collectors.minBy(comp),
-								   Optional::get
+	Comparator<Compra> comp = Comparator.comparing(Compra::getFinalPrice); //Comparator que compara el objeto de tipo Compra por su propiedad derivada getFinalPrice
+	return compras.stream() //Stream<Compra>
+				  .collect(Collectors.groupingBy( //Agrupamos el Stream
+						   Compra::getCustomerId, //Funcion claves (Integer customerId)
+						   Collectors.collectingAndThen( //Usamos collectingAndThen para transformar y luego recolectar
+							 	   Collectors.minBy(comp), //Aplicamos el valor minimo a cada Compra
+								   Optional::get //Tomamos el valor desenvolviendo el Optional<Compra>
 								   )
 						   ));
 	}
@@ -341,26 +340,26 @@ public class ComprasImpl implements Compras {
 	 * @return Un diccionario con paises como clave y una lista de n descripciones mas cortas por pais como valores
 	 */
 	public SortedMap<TypeCountry, List<String>> getNDescripcionesMasCortasPorPais(Integer n) {
-		Comparator<String> comp = Comparator.comparing(String::length);
+		Comparator<String> comp = Comparator.comparing(String::length); //Comparator que compara los String por su atributo length
 		
 		//Primero creamos un diccionario auxiliar con clave pais y valor lista de descripciones
 		Map<TypeCountry, List<String>> aux = compras.stream()
 					  								.collect(Collectors.groupingBy(
-															Compra::getCountry,
-															Collectors.mapping(
-																	Compra::getDescription,
-																	Collectors.toList())
+															Compra::getCountry, //Funcion claves (por pais)
+															Collectors.mapping( //Transformamos los valores y los recolectamos
+																	Compra::getDescription, //Transformamos la compra en su descripcion
+																	Collectors.toList()) //Las vamos metiendo en una lista
 															));
 		
 		//Recorremos el diccionario por parejas para poder realizar los cambios necesarios en los valores
 		return aux.entrySet()
 				  .stream()
 				  .collect(Collectors.groupingBy(
-						  Map.Entry::getKey,
-						  TreeMap::new,
-						  Collectors.flatMapping(
-								  c -> c.getValue().stream().sorted(comp.reversed()).limit(n),
-								  Collectors.toList()
+						  Map.Entry::getKey, //Tomamos como clave cada clave del Map anterior
+						  TreeMap::new, //Metemos las claves y los valores en un SortedMap
+						  Collectors.flatMapping( //Hacemos un flatMapping para poder editar los valores mas facilmente
+								  c -> c.getValue().stream().sorted(comp.reversed()).limit(n), //Convertimos a Stream las listas de los valores y las ordenamos y limitamos
+								  Collectors.toList() //Volvemos a meter todo en una lista
 								  )
 						  
 						  ));
@@ -372,68 +371,32 @@ public class ComprasImpl implements Compras {
 	 * 
 	 * Tipo: Funcion que calcula un Map y devuelve la clave con el valor 
 	 * 		 asociado mayor o menor de todo el Map
-	 *       
-	 * @return una pareja Clave, valor del tipo Map<LocalDateTime, Purchase>, la 
-	 *         mas cara de todo el Map
+	 *      
+	 * @return una clave del tipo LocalDateTime asociada a un valor de tipo Purchase, el mas caro de todo el Map
 	 */
-//	public Map<LocalDateTime, Purchase> compraMasCaraPorHora() {
-//		Comparator<Purchase> comp = Comparator.comparing(Purchase::getTotalPurchase);
-//		Map<LocalDateTime, List<Purchase>> aux = compras.stream()
-//					  							  		.collect(Collectors.groupingBy(
-//																 Compra::getPurchaseDate,
-//																 Collectors.mapping(
-//																		   Compra::getPurchase,
-//																		   Collectors.toList())
-//																 ));
-//		Map<LocalDateTime, Purchase> aux2 = aux.entrySet()
-//				  							   .stream()
-//				  							   .collect(Collectors.groupingBy(
-//				  									   Map.Entry::getKey,
-//				  									   Collectors.collectingAndThen(
-//				  											   Collectors.maxBy(comp),
-//				  											   Optional::get
-//				  											   )					  
-//				  									   ));
-//		return
-//	}
-	
-//	public Purchase compraMasCaraPorHora() {
-//		Comparator<Purchase> comp = Comparator.comparing(Purchase::getTotalPurchase);
-//		Map<LocalDateTime, List<Purchase>> aux = compras.stream()
-//					  							  		.collect(Collectors.groupingBy(
-//																 Compra::getPurchaseDate,
-//																 Collectors.mapping(
-//																		   Compra::getPurchase,
-//																		   Collectors.toList())
-//																 ));
-//		Map<LocalDateTime, Purchase> aux2 = aux.entrySet()
-//				  							   .stream()
-//				  							   .collect(Collectors.toMap(
-//				  									   Map.Entry::getKey,
-//				  									   Collectors.maxBy(comp)
-//				  									   ));
-//		return aux2.entrySet()
-//				   .stream()
-//				   .max(Map.Entry::getValue)
-//				   .get();
-//	}
-	
-	public Purchase compraMasCaraPorHora() {
-		Comparator<Purchase> comp = Comparator.comparing(Purchase::getTotalPurchase);
+	public LocalDateTime compraMasCaraPorHora() {
+		Comparator<Purchase> comp = Comparator.comparing(Purchase::getTotalPurchase); //Comparator que compara los objetos de tipo Purchase por su propiedad getTotalPurchase
+		
+		//Primero creamos un diccionario auxiliar que agrupe las claves (fecha) y transforme los valores de Compra a Purchase
 	    Map<LocalDateTime, List<Purchase>> aux = compras.stream()
-	        .collect(Collectors.groupingBy(Compra::getPurchaseDate,
-	            Collectors.mapping(Compra::getPurchase, Collectors.toList())
-	        ));
+	    												.collect(Collectors.groupingBy(
+	    														Compra::getPurchaseDate,
+	    														Collectors.mapping(Compra::getPurchase, Collectors.toList())
+	    														));
+	    
+	    //Creamos un segundo Map auxiliar que a cada lista valor del map la reduzca a un valor, el máximo
 	    Map<LocalDateTime, Purchase> aux2 = aux.entrySet().stream()
-	        .collect(Collectors.toMap(
-	            Map.Entry::getKey,
-	            e -> e.getValue().stream().collect(Collectors.maxBy(comp)).orElse(null)
-	        ));
+			    									   	  .collect(Collectors.toMap(
+			    									   			  Map.Entry::getKey,
+			    									   			  c -> c.getValue().stream().collect(Collectors.maxBy(comp)).orElse(null)
+			    									   			  ));
+			    
+	    //Devolvemos solo la clave asociada al valor mayor
 	    return aux2.entrySet()
-	        .stream()
-	        .max(Map.Entry.comparingByValue(comp))
-	        .map(Map.Entry::getValue)
-	        .orElse(null);
+	    		   .stream()
+	    		   .max(Map.Entry.comparingByValue(comp))
+	    		   .map(Map.Entry::getKey)
+	    		   .orElse(null);
 	}
 	
 	

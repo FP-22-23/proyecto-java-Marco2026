@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
-
-import fp.common.Purchase;
 import fp.common.TypeCountry;
 
 public interface Compras {
@@ -136,7 +134,7 @@ public interface Compras {
 	 * Tipo: Un máximo con filtrado
 	 * 
 	 * @param customerId: Id del cliente sobre el que queremos encontrar su compra más cara
-	 * @return la compra mas cara del cliente dado como parámetro
+	 * @return la compra mas cara del cliente dado como parametro
 	 */
 	Compra getCompraMayorPorCliente(Integer customerId);
 	
@@ -194,10 +192,9 @@ public interface Compras {
 	 * 
 	 * Tipo: Funcion que calcula un Map y devuelve la clave con el valor 
 	 * 		 asociado mayor o menor de todo el Map
-	 *       
-	 * @return una pareja Clave, valor del tipo Map<LocalDateTime, Purchase>, la 
-	 *         mas cara de todo el Map
+	 *      
+	 * @return una clave del tipo LocalDateTime asociada a un valor de tipo Purchase, el mas caro de todo el Map
 	 */
-	Purchase compraMasCaraPorHora();
+	LocalDateTime compraMasCaraPorHora();
 
 }

@@ -98,3 +98,36 @@ Clase contenedora de los objetos de tipo Compra.
 - _List<Compra> encuentraComprasMayoresPorPais(TypeCountry country, Double n)_: Devuelve las compras que fueron mas caras que n en el pais country.
 - _SortedMap<TypeCountry, SortedSet<String>> agrupaKeywordsPorPais()_: Devuelve las compras que fueron mas caras que n en el pais country.
 - _SortedMap<Integer, Double> cuentaGastoPorCliente()_: Devuelve El gasto total de cada cliente.
+- _Boolean clienteCompraMenosDeStream(Integer customerId, Integer n)_: Devuelve true si el cliente ha comprado en alguna de sus compras menos unidades que el numero n.
+- _Integer numComprasPorClienteStream(Integer customerId)_: Devuelve el numero de compras realizadas por un cliente dado.
+- _List<Compra> encuentraComprasMayoresPorPaisStream(TypeCountry country, Double n)_: Devuelve las compras que fueron mas caras que n en el pais country.
+- _Compra getCompraMayorPorCliente(Integer customerId)_: Devuelve la compra mas cara del cliente dado como parametro.
+- _List<Integer> getIdClientesPorPaisOrdenados(TypeCountry Country)_: Devuelve una lista ordenada por el orden natural de Integer de los ID de los clientes.
+- _SortedMap<TypeCountry, SortedSet<String>> agrupaKeywordsPorPaisStream()_: Devuelve un Map en el que las claves son los paises y los valores son conjuntos de palabras clave usadas por clientes de ese pais.
+- _Map<LocalDateTime, Compra> getCompraMasCaraPorFecha()_: Devuelve un Map en el que las claves son las fechas de compra y los valores son la compra más cara que se realizo.
+- _Map<Integer, Compra> getCompraMasBarataPorCliente()_: Devuelve un Map en el que las claves son los Id de los clientes y los valores son la compra más barata que realizaron.
+- _SortedMap<TypeCountry, List<String>> getNDescripcionesMasCortasPorPais(Integer n)_: Devuelve un diccionario con paises como clave y una lista de n descripciones mas cortas por pais como valores.
+- _LocalDateTime compraMasCaraPorHora()_: Devuelve una clave del tipo LocalDateTime asociada a un valor de tipo Purchase, el mas caro de todo el Map.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
